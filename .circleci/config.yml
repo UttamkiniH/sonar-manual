@@ -22,9 +22,9 @@ jobs:
           path: android/app/build/outputs/apk/release
           destination: release-apk/
       - sonarqube/scan:
-          project-key: GeekyAnts_Sonarqube-sample_AYZfZG4bmIpfUe2r3Gqa
-          organization: geekyants
-          token: $SONARQUBE_TOKEN
+          project-key: sonarqube-manual
+          host-url: https://sonarqube.alpha.blr.gluestack.app
+          login: $SONARQUBE_TOKEN
 
 workflows:
   version: 2
