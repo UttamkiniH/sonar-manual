@@ -1,9 +1,21 @@
 version: 2.1
 
-orbs:
-  sonarqube: syneki/sonarqube@1.0.1
+
 
 jobs:
+
+  sonar:
+    working_directory: ~/sonarqube101
+    docker:
+      - image: reactnativecommunity/react-native-android
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/sonarqube101
+
+      - sonarcloud/scan:
+          sonar_token_variable_name: $SONARQUBE_TOKEN
+
   android:
     working_directory: ~/sonarqube101
     docker:
@@ -21,11 +33,12 @@ jobs:
       - store_artifacts:
           path: android/app/build/outputs/apk/release
           destination: release-apk/
-      - sonarqube/scan:
-          project-key: sonarqube-manual
-          host-url: https://sonarqube.alpha.blr.gluestack.app
-          login: $SONARQUBE_TOKEN
 
+
+orbs:
+  sonarqube: syneki/sonarqube@1.0.1
+
+  
 workflows:
   version: 2
   build_and_test:

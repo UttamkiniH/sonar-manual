@@ -1,0 +1,6 @@
+projectKey=sonarqube-manual
+serverUrl=https://sonarqube.alpha.blr.gluestack.app
+serverVersion=9.9.0.65466
+dashboardUrl=https://sonarqube.alpha.blr.gluestack.app/dashboard?id=sonarqube-manual
+ceTaskId=AYZzNX15UIDVYduLM6Qn
+ceTaskUrl=https://sonarqube.alpha.blr.gluestack.app/api/ce/task?id=AYZzNX15UIDVYduLM6Qn
