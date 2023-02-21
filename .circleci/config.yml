@@ -1,6 +1,8 @@
-version: 2.1
 
-
+version: '2.1'
+orbs:
+  sonarqube: ft-circleci-orbs/sonarqube-orb@1.0.0
+  
 
 jobs:
 
@@ -33,18 +35,9 @@ jobs:
       - store_artifacts:
           path: android/app/build/outputs/apk/release
           destination: release-apk/
-
-
-orbs:
-  sonarqube: syneki/sonarqube@1.0.1
-
-  
+          
 workflows:
-  version: 2
-  build_and_test:
+  your-workflow:
     jobs:
       - android
-      
-
-env:
-  SONARQUBE_TOKEN: sqp_65c7d89595ade54f5c27bb0270f86b1f77a36487
+      - sonarqube/scan
