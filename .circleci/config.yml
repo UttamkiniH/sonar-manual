@@ -13,7 +13,7 @@ jobs:
       - attach_workspace:
           at: ~/sonarqube101
 
-      - sonarcloud/scan:
+      - sonarqube/scan:
           sonar_token_variable_name: $SONARQUBE_TOKEN
 
   android:
