@@ -13,17 +13,10 @@ jobs:
       - run: npm run test -- --coverage
       - run:
           name: Analyze with SonarQube
-          command: |
-            curl --fail -X POST \
-              -H 'Content-Type: application/x-www-form-urlencoded' \
-              -d "projectKey=sonarqube-manual" \
-              -d "projectName=sonarqube-manual" \
-              -d "projectVersion=${CIRCLE_SHA1}" \
-              -d "sonar.sources=." \
-              -d "sonar.host.url=https://sonarqube.alpha.blr.gluestack.app"
-              -d "sonar.login=${SONARQUBE_TOKEN}" \
-              https://sonarqube.alpha.blr.gluestack.app/api/qualitygates/project_status?projectKey=sonarqube-manual
-
+          command: sonar-scanner \             
+              -Dsonar.projectKey=sonarqube-manual \
+              -Dsonar.sources=. \
+              -Dsonar.host.url=https://sonarqube.alpha.blr.gluestack.app
 
 workflows:
   build-and-test:
