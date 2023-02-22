@@ -2,25 +2,18 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:12.18.3
+      - image: circleci/node:14.17
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
       - run:
           name: Install Dependencies
-          command: yarn install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          command: npm install --prefer-offline --no-audit
       - run:
           name: Build
-          command: |
-            yarn run build
-            yarn run test:ci
+          command: npm run build
+      - run:
+          name: Run Tests
+          command: npm test       
       - run:
           name: Install SonarQube Dependencies
           command: |
@@ -28,6 +21,7 @@ jobs:
       - run:
           name: SonarQube Analysis
           command: |
+            npm install -D sonar-scanner
             sonar-scanner \
               -Dsonar.host.url=$SONARQUBE_URL \
               -Dsonar.projectKey=$SONARQUBE_PROJECT_KEY \
