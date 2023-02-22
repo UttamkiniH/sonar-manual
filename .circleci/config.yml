@@ -1,27 +1,22 @@
 version: 2
 jobs:
-  build:
+  sonarqube:
     docker:
       - image: circleci/node:14.17
     steps:
       - checkout
       - run:
-          name: Install Dependencies
-          command: npm install --prefer-offline --no-audit
-      - run:
-          name: Build
-          command: npm run build                                
+          name: Install SonarQube Scanner
+          command: npm install -D sonar-scanner                            
       - run:
           name: SonarQube Analysis
-          command: |
-            npm install -D sonar-scanner
-            sonar-scanner \
+          command: sonar-scanner \
               -Dsonar.host.url=$SONARQUBE_URL \
               -Dsonar.projectKey=$SONARQUBE_PROJECT_KEY \
               -Dsonar.projectName=sonarqube-manual \
               -Dsonar.sources=.
 workflows:
   version: 2
-  build_and_analyze:
+  sonarqube:
     jobs:
-      - build
+      - sonarqube
