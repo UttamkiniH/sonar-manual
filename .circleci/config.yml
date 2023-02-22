@@ -16,8 +16,8 @@ jobs:
           command: |
             curl --fail -X POST \
               -H 'Content-Type: application/x-www-form-urlencoded' \
-              -d "projectKey=sqp_65c7d89595ade54f5c27bb0270f86b1f77a36487" \
-              -d "projectName=sonar-manual" \
+              -d "projectKey=sonarqube-manual" \
+              -d "projectName=sonarqube-manual" \
               -d "sonar.sources=." \
               -d "sonar.host.url=https://sonarqube.alpha.blr.gluestack.app"
              
@@ -28,4 +28,4 @@ workflows:
       - sonarqube
 
 env:
-  SONARQUBE_TOKEN: sqp_65c7d89595ade54f5c27bb0270f86b1f77a36487
+  SONARQUBE_TOKEN: sqp_cefbc7a1d8cd303c22f728512efbd5981a6ef2ed
