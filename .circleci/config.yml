@@ -4,47 +4,28 @@ version: 2.1
 
 jobs:
 
-  sonar:
-    working_directory: ~/sonarqube101
+  sonarqube:
     docker:
-      - image: reactnativecommunity/react-native-android
+      - image: circleci/node:14
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/sonarqube101
+      - run: npm install
+      - run: npm run test -- --coverage
+      - run:
+          name: Analyze with SonarQube
+          command: |
+            curl --fail -X POST \
+              -H 'Content-Type: application/x-www-form-urlencoded' \
+              -d "projectKey=sqp_65c7d89595ade54f5c27bb0270f86b1f77a36487" \
+              -d "projectName=sonar-manual" \
+              -d "sonar.sources=." \
+              -d "sonar.host.url=https://sonarqube.alpha.blr.gluestack.app"
+             
 
-      - sonarqube/scan:
-          sonar_token_variable_name: $SONARQUBE_TOKEN
-
-  android:
-    working_directory: ~/sonarqube101
-    docker:
-      - image: reactnativecommunity/react-native-android
-    steps:
-      - checkout
-      - run: npx envinfo
-      - run: yarn install
-
-      - run: cd android && chmod +x gradlew && ./gradlew --no-daemon bundleRelease assembleRelease
-      - run: cd android/app/build/outputs/apk/release && ls && pwd
-      - store_artifacts:
-          path: android/app/build/outputs/bundle/release
-          destination: release-aab/
-      - store_artifacts:
-          path: android/app/build/outputs/apk/release
-          destination: release-apk/
-
-
-orbs:
-  sonarqube: syneki/sonarqube@1.0.1
-
-  
 workflows:
-  version: 2
-  build_and_test:
+  build-and-test:
     jobs:
-      - android
-      
+      - sonarqube
 
 env:
   SONARQUBE_TOKEN: sqp_65c7d89595ade54f5c27bb0270f86b1f77a36487
