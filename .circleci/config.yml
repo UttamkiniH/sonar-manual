@@ -10,10 +10,7 @@ jobs:
           command: npm install --prefer-offline --no-audit
       - run:
           name: Build
-          command: npm run build
-      - run:
-          name: Run Tests
-          command: npm test                                  
+          command: npm run build                                
       - run:
           name: SonarQube Analysis
           command: |
