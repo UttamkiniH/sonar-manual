@@ -13,11 +13,7 @@ jobs:
           command: npm run build
       - run:
           name: Run Tests
-          command: npm test       
-      - run:
-          name: Install SonarQube Dependencies
-          command: |
-            npm install -g sonarqube-scanner                                    
+          command: npm test                                  
       - run:
           name: SonarQube Analysis
           command: |
