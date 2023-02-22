@@ -18,9 +18,12 @@ jobs:
               -H 'Content-Type: application/x-www-form-urlencoded' \
               -d "projectKey=sonarqube-manual" \
               -d "projectName=sonarqube-manual" \
+              -d "projectVersion=${CIRCLE_SHA1}" \
               -d "sonar.sources=." \
               -d "sonar.host.url=https://sonarqube.alpha.blr.gluestack.app"
-             
+              -d "sonar.login=${SONARQUBE_TOKEN}" \
+              https://sonarqube.alpha.blr.gluestack.app/api/qualitygates/project_status?projectKey=sonarqube-manual
+
 
 workflows:
   build-and-test:
